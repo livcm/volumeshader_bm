@@ -21,7 +21,7 @@ var ang2=0.4;
 var cenx=0.0;
 var ceny=0.0;
 var cenz=0.0;
-var KERNEL="float kernel(vec3 ver){\n"+
+var kernal="float kernal(vec3 ver){\n"+
            "    vec3 a;\n"+
            "    float b,c,d,e;\n"+
            "    a=ver;\n"+
@@ -237,7 +237,7 @@ window.onload = function () {
         "#define MAXR 8\n" +
         "#define SOLVER 8\n" +
         "precision highp float;\n" +
-        "float kernel(vec3 ver)\n;" +
+        "float kernal(vec3 ver)\n;" +
         "uniform vec3 right, forward, up, origin;\n" +
         "varying vec3 dir, localdir;\n" +
         "uniform float len;\n" +
@@ -253,19 +253,19 @@ window.onload = function () {
         "   color.g=0.0;\n" +
         "   color.b=0.0;\n" +
         "   sign=0;"+
-        "   v1 = kernel(origin + dir * (step*len));\n" +
-        "   v2 = kernel(origin);\n" +
+        "   v1 = kernal(origin + dir * (step*len));\n" +
+        "   v2 = kernal(origin);\n" +
         "   for (int k = 2; k < 1002; k++) {\n" +
         "      ver = origin + dir * (step*len*float(k));\n" +
-        "      v = kernel(ver);\n" +
+        "      v = kernal(ver);\n" +
         "      if (v > 0.0 && v1 < 0.0) {\n" +
         "         r1 = step * len*float(k - 1);\n" +
         "         r2 = step * len*float(k);\n" +
-        "         m1 = kernel(origin + dir * r1);\n" +
-        "         m2 = kernel(origin + dir * r2);\n" +
+        "         m1 = kernal(origin + dir * r1);\n" +
+        "         m2 = kernal(origin + dir * r2);\n" +
         "         for (int l = 0; l < SOLVER; l++) {\n" +
         "            r3 = r1 * 0.5 + r2 * 0.5;\n" +
-        "            m3 = kernel(origin + dir * r3);\n" +
+        "            m3 = kernal(origin + dir * r3);\n" +
         "            if (m3 > 0.0) {\n" +
         "               r2 = r3;\n" +
         "               m2 = m3;\n" +
@@ -285,32 +285,32 @@ window.onload = function () {
         "         r2 = step * len*(float(k) - 2.0 + 2.0*M_L);\n" +
         "         r3 = step * len*(float(k) - 2.0 + 2.0*M_R);\n" +
         "         r4 = step * len*float(k);\n" +
-        "         m2 = kernel(origin + dir * r2);\n" +
-        "         m3 = kernel(origin + dir * r3);\n" +
+        "         m2 = kernal(origin + dir * r2);\n" +
+        "         m3 = kernal(origin + dir * r3);\n" +
         "         for (int l = 0; l < MAXR; l++) {\n" +
         "            if (m2 > m3) {\n" +
         "               r4 = r3;\n" +
         "               r3 = r2;\n" +
         "               r2 = r4 * M_L + r1 * M_R;\n" +
         "               m3 = m2;\n" +
-        "               m2 = kernel(origin + dir * r2);\n" +
+        "               m2 = kernal(origin + dir * r2);\n" +
         "            }\n" +
         "            else {\n" +
         "               r1 = r2;\n" +
         "               r2 = r3;\n" +
         "               r3 = r4 * M_R + r1 * M_L;\n" +
         "               m2 = m3;\n" +
-        "               m3 = kernel(origin + dir * r3);\n" +
+        "               m3 = kernal(origin + dir * r3);\n" +
         "            }\n" +
         "         }\n" +
         "         if (m2 > 0.0) {\n" +
         "            r1 = step * len*float(k - 2);\n" +
         "            r2 = r2;\n" +
-        "            m1 = kernel(origin + dir * r1);\n" +
-        "            m2 = kernel(origin + dir * r2);\n" +
+        "            m1 = kernal(origin + dir * r1);\n" +
+        "            m2 = kernal(origin + dir * r2);\n" +
         "            for (int l = 0; l < SOLVER; l++) {\n" +
         "               r3 = r1 * 0.5 + r2 * 0.5;\n" +
-        "               m3 = kernel(origin + dir * r3);\n" +
+        "               m3 = kernal(origin + dir * r3);\n" +
         "               if (m3 > 0.0) {\n" +
         "                  r2 = r3;\n" +
         "                  m2 = m3;\n" +
@@ -328,11 +328,11 @@ window.onload = function () {
         "         else if (m3 > 0.0) {\n" +
         "            r1 = step * len*float(k - 2);\n" +
         "            r2 = r3;\n" +
-        "            m1 = kernel(origin + dir * r1);\n" +
-        "            m2 = kernel(origin + dir * r2);\n" +
+        "            m1 = kernal(origin + dir * r1);\n" +
+        "            m2 = kernal(origin + dir * r2);\n" +
         "            for (int l = 0; l < SOLVER; l++) {\n" +
         "               r3 = r1 * 0.5 + r2 * 0.5;\n" +
-        "               m3 = kernel(origin + dir * r3);\n" +
+        "               m3 = kernal(origin + dir * r3);\n" +
         "               if (m3 > 0.0) {\n" +
         "                  r2 = r3;\n" +
         "                  m2 = m3;\n" +
@@ -354,9 +354,9 @@ window.onload = function () {
         "   if (sign==1) {\n" +
         "      ver = origin + dir*r3 ;\n" +
             "       r1=ver.x*ver.x+ver.y*ver.y+ver.z*ver.z;" +
-        "      n.x = kernel(ver - right * (r3*0.00025)) - kernel(ver + right * (r3*0.00025));\n" +
-        "      n.y = kernel(ver - up * (r3*0.00025)) - kernel(ver + up * (r3*0.00025));\n" +
-        "      n.z = kernel(ver + forward * (r3*0.00025)) - kernel(ver - forward * (r3*0.00025));\n" +
+        "      n.x = kernal(ver - right * (r3*0.00025)) - kernal(ver + right * (r3*0.00025));\n" +
+        "      n.y = kernal(ver - up * (r3*0.00025)) - kernal(ver + up * (r3*0.00025));\n" +
+        "      n.z = kernal(ver + forward * (r3*0.00025)) - kernal(ver - forward * (r3*0.00025));\n" +
         "      r3 = n.x*n.x+n.y*n.y+n.z*n.z;\n" +
         "      n = n * (1.0 / sqrt(r3));\n" +
         "      ver = localdir;\n" +
@@ -383,7 +383,7 @@ window.onload = function () {
     gl.shaderSource(vertshader, VSHADER_SOURCE);
     gl.compileShader(vertshader);
     var infov = gl.getShaderInfoLog(vertshader);
-    gl.shaderSource(fragshader, FSHADER_SOURCE + KERNEL);
+    gl.shaderSource(fragshader, FSHADER_SOURCE + kernal);
     gl.compileShader(fragshader);
     var infof = gl.getShaderInfoLog(fragshader);
     gl.attachShader(shaderProgram, vertshader);
@@ -411,15 +411,15 @@ window.onload = function () {
     gl.viewport(0, 0, 1024, 1024);
     draw();
     window.requestAnimationFrame(ontimer);
-    document.getElementById("kernel").value = KERNEL;
+    document.getElementById("kernal").value = kernal;
     document.getElementById("btn").addEventListener("click", function() {
         var state = this.innerText == "CONFIG";
         this.innerText = state ? "HIDE" : "CONFIG";
         document.getElementById("config").style.display = state ? "inline" : "none";
     });
     document.getElementById("apply").addEventListener("click", function() {
-        KERNEL = document.getElementById("kernel").value;
-        gl.shaderSource(fragshader, FSHADER_SOURCE + KERNEL);
+        kernal = document.getElementById("kernal").value;
+        gl.shaderSource(fragshader, FSHADER_SOURCE + kernal);
         gl.compileShader(fragshader);
         var infof = gl.getShaderInfoLog(fragshader);
         gl.linkProgram(shaderProgram);
@@ -438,6 +438,6 @@ window.onload = function () {
         gllen = gl.getUniformLocation(shaderProgram, 'len');
     });
     document.getElementById("cancle").addEventListener("click", function() {
-        document.getElementById("kernel").value = KERNEL;
+        document.getElementById("kernal").value = kernal;
     });
 }
