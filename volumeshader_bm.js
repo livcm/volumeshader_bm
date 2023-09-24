@@ -438,7 +438,7 @@ window.onload = function () {
         gly = gl.getUniformLocation(shaderProgram, 'y');
         gllen = gl.getUniformLocation(shaderProgram, 'len');
     });
-    document.getElementById("cancle").addEventListener("click", function() {
+    document.getElementById("cancel").addEventListener("click", function() {
         document.getElementById("kernel").value = KERNEL;
     });
 }
