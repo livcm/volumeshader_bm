@@ -4,27 +4,23 @@ body {
     overflow-y: hidden;
     height: 100vh;
 }
-
 #c1 {
     background: #fbf7fe;
     position: fixed;
     left: 0px;
     top: 0px;
 }
-
 #btn {
     position: fixed;
     left: 0px;
     top: 0px;
 }
-
 #main {
     transform-origin: 0px 0px;
     position: fixed;
     left: 0px;
     top: 0px;
 }
-
 #config {
     position: fixed;
     left: 0px;

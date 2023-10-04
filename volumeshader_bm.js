@@ -92,8 +92,7 @@ document.addEventListener("mousemove",
     }
     mx=oEvent.clientX;
     my=oEvent.clientY;
-    },
-    false);
+    },false);
 document.addEventListener("mousewheel",
     function (ev) {
         ev.preventDefault();
