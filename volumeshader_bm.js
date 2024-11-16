@@ -1,6 +1,6 @@
 alert("Trigonometric and inverse trigonometric functions test.\n"+
-      "Created by cznull on Bilibili/GitHub\n"+
-      "Modified by livcm on GitHub")
+      "Created by cznull\n"+
+      "Modified by livcm")
 var cx,cy
 var glposition
 var glright
